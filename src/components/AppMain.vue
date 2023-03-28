@@ -20,13 +20,17 @@ export default {
 
         }
     },
+
     
 
     components: {
         CardItem,
     },
 
+
     created() {
+
+
         axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=50&offset=0').then((res) => {
             // console.log(res.data.data[0].card_images[0].image_url);
             console.log(res.data.data);
@@ -38,12 +42,14 @@ export default {
 
 
 
+
 }
 
 
 </script>
 
 <template>
+    <!-- <button @click="countDown()">Premi</button> -->
     <div v-if="store.cards.length < 50" class="loading-container">
         <img src="/img/giphy.webp" alt="">
     </div>

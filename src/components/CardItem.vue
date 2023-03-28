@@ -29,6 +29,12 @@ export default {
     <div class="single-card">
 
         <img :src="card.card_images[0].image_url" alt="">
+        <div>
+            {{ card.name }}
+        </div>
+        <div>
+            {{ card.type }}
+        </div>
         
     </div>
 </template>
@@ -38,11 +44,13 @@ export default {
 @use "../scss/variables.scss" as *;
 
 .single-card {
+    display: flex;
+    flex-flow: column nowrap;
     width: calc(100% / 6);
-    height: 300px;
+    min-height: 300px;
 
     img {
-        height: 100%;
+        width: 100%;
     }
 }
 
