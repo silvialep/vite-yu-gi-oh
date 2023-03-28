@@ -16,9 +16,11 @@ export default {
 
 
             store,
+            counter: 0,
 
         }
     },
+    
 
     components: {
         CardItem,
@@ -42,7 +44,10 @@ export default {
 </script>
 
 <template>
-    <div id="main-container">
+    <div v-if="store.cards.length < 50" class="loading-container">
+        <img src="/img/giphy.webp" alt="">
+    </div>
+    <div v-else class="main-container">
         <CardItem v-for="card in store.cards" :card="card"></CardItem>
 
     </div>
@@ -52,8 +57,12 @@ export default {
 
 @use "../scss/variables.scss" as *;
 
-
-#main-container {
+.loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.main-container {
     @include mainContainer();
 
 }
