@@ -48,6 +48,7 @@ export default {
     flex-flow: column nowrap;
     width: calc(100% / 6);
     min-height: 300px;
+    background-color: rgb(212, 143, 56);
 
     img {
         width: 100%;

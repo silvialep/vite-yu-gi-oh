@@ -1,10 +1,10 @@
 <script>
 
+import CardItem from "./CardItem.vue";
+
 import { store } from "../store.js";
 
 import axios from 'axios';
-
-import CardItem from "./CardItem.vue";
 
 
 export default {
@@ -13,25 +13,16 @@ export default {
 
     data() {
         return {
-
-
             store,
-            counter: 0,
+            counter: 0,           
 
         }
     },
 
-    
-
-    components: {
-        CardItem,
-    },
-
-
     created() {
 
 
-        axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=50&offset=0').then((res) => {
+        axios.get(this.store.APIcall).then((res) => {
             // console.log(res.data.data[0].card_images[0].image_url);
             console.log(res.data.data);
 
@@ -39,6 +30,12 @@ export default {
 
         })
     },
+    
+
+    components: {
+        CardItem,
+    },
+
 
 
 
@@ -49,7 +46,6 @@ export default {
 </script>
 
 <template>
-    <!-- <button @click="countDown()">Premi</button> -->
     <div v-if="store.cards.length < 50" class="loading-container">
         <img src="/img/giphy.webp" alt="">
     </div>
@@ -64,12 +60,20 @@ export default {
 @use "../scss/variables.scss" as *;
 
 .loading-container {
+    width: 100vw;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    img {
+        width: 100%;
+        object-fit: contain;
+    }
 }
 .main-container {
     @include mainContainer();
+    background-color: white;
 
 }
 
