@@ -24,8 +24,8 @@ export default {
 
 <template>
     <div id="card-search">
-        <input v-model="store.cardName" type="text" placeholder="Inserisci il nome della carta da cercare">
-        <button>Cerca</button>
+        <input v-model="store.cardName" type="text" placeholder="Inserisci il nome della carta da cercare" @keyup.enter="$emit('cardSearch')">
+        <button @click="$emit('cardSearch')">Cerca</button>
 
     </div>
 </template>

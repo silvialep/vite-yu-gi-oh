@@ -24,7 +24,7 @@ export default {
     created() {
 
 
-        axios.get(this.store.APIcall).then((res) => {
+        axios.get(this.store.APIcall += "?num=150&offset=0").then((res) => {
             // console.log(res.data.data[0].card_images[0].image_url);
             console.log(res.data.data);
 
@@ -40,21 +40,18 @@ export default {
 
             if (this.store.cardName != "") {
 
-                apiNewString += "?name=${this.store.cardName}";
+                apiNewString += `&fname=${this.store.cardName}`;
 
             }
 
 
-
-
-            console.log(apiNewString);
-
             axios.get(apiNewString).then((res) => {
 
-                console.log(res.data.data);
                 this.store.cards = res.data.data;
 
             });
+
+            this.store.cardName = '';
         },
     },
     
@@ -75,13 +72,17 @@ export default {
 </script>
 
 <template>
-    <div v-if="store.cards.length < 50" class="loading-container">
+    <div v-if="!store.cards.length > 0" class="loading-container">
         <img src="/img/giphy.webp" alt="">
     </div>
 
     
     <div v-else>
-        <CardSearch></CardSearch>
+        <CardSearch @cardSearch="search()"></CardSearch>
+        <div id="card-counter">
+            <span>Trovate {{ store.cards.length }} carte</span>
+
+        </div>
         <div class="main-container">
             <CardItem v-for="card in store.cards" :card="card"></CardItem>
 
@@ -110,6 +111,15 @@ export default {
     @include mainContainer();
     background-color: white;
 
+}
+
+#card-counter {
+    @include mainContainer();
+    align-items: center;
+    height: 80px;
+    padding: 10px 30px;
+    font-size: 1.2rem;
+    background-color: rgb(33, 37, 41);
 }
 
 </style>
