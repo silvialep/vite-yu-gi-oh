@@ -29,10 +29,10 @@ export default {
     <div class="single-card">
 
         <img :src="card.card_images[0].image_url" alt="">
-        <div>
-            {{ card.name }}
+        <div class="card-name">
+            {{ card.name.toUpperCase() }}
         </div>
-        <div>
+        <div class="card-type">
             {{ card.type }}
         </div>
         
@@ -46,9 +46,21 @@ export default {
 .single-card {
     display: flex;
     flex-flow: column nowrap;
+    text-align: center;
     width: calc(100% / 6);
     min-height: 300px;
     background-color: rgb(212, 143, 56);
+
+    .card-name {
+        flex-grow: 1;
+        font-weight: bold;
+        padding: 10px 0;
+    }
+
+    .card-type {
+        align-content: flex-end;
+        padding: 10px 0;
+    }
 
     img {
         width: 100%;

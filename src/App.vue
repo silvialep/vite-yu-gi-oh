@@ -4,13 +4,8 @@ import AppMain from './components/AppMain.vue';
 
 import AppHeader from './components/AppHeader.vue';
 
-import CardSearch from './components/CardSearch.vue';
-
-
 
 export default {
-
-  // name: -nomecomponent -,
 
   data() {
     return {
@@ -19,12 +14,9 @@ export default {
   },
 
 
-  
-
   components: {
     AppMain,
     AppHeader,
-    CardSearch
 
   },
 
@@ -39,7 +31,6 @@ export default {
 
   <AppHeader></AppHeader>
 
-  <CardSearch></CardSearch>
 
   <AppMain></AppMain>
   

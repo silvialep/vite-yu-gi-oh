@@ -1,6 +1,8 @@
 <script>
 
 import CardItem from "./CardItem.vue";
+import CardSearch from './CardSearch.vue';
+
 
 import { store } from "../store.js";
 
@@ -30,10 +32,37 @@ export default {
 
         })
     },
+
+    
+    methods: {
+        search() {
+            let apiNewString = this.store.APIcall
+
+            if (this.store.cardName != "") {
+
+                apiNewString += "?name=${this.store.cardName}";
+
+            }
+
+
+
+
+            console.log(apiNewString);
+
+            axios.get(apiNewString).then((res) => {
+
+                console.log(res.data.data);
+                this.store.cards = res.data.data;
+
+            });
+        },
+    },
     
 
     components: {
         CardItem,
+        CardSearch
+
     },
 
 
@@ -49,8 +78,14 @@ export default {
     <div v-if="store.cards.length < 50" class="loading-container">
         <img src="/img/giphy.webp" alt="">
     </div>
-    <div v-else class="main-container">
-        <CardItem v-for="card in store.cards" :card="card"></CardItem>
+
+    
+    <div v-else>
+        <CardSearch></CardSearch>
+        <div class="main-container">
+            <CardItem v-for="card in store.cards" :card="card"></CardItem>
+
+        </div>
 
     </div>
 </template>
