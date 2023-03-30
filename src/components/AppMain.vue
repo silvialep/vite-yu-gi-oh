@@ -16,7 +16,8 @@ export default {
     data() {
         return {
             store,
-            counter: 0,           
+            checker: true,
+            isLoading: true,
 
         }
     },
@@ -26,9 +27,10 @@ export default {
 
         axios.get(this.store.APIcall += "?num=150&offset=0").then((res) => {
             // console.log(res.data.data[0].card_images[0].image_url);
-            console.log(res.data.data);
 
             this.store.cards = res.data.data;
+            this.isLoading = false;
+
 
         })
     },
@@ -36,21 +38,36 @@ export default {
     
     methods: {
         search() {
-            let apiNewString = this.store.APIcall
+            this.isLoading = true;
+
+            let apiNewString = this.store.APIcall;
 
             if (this.store.cardName != "") {
-
+                
                 apiNewString += `&fname=${this.store.cardName}`;
-
+                
             }
-
-
+            
+            // if(apiNewString += `&fname=${this.store.cardName}` == null) {
+            //     this.checker = false;
+            // }
+            
             axios.get(apiNewString).then((res) => {
-
+                
                 this.store.cards = res.data.data;
-
+                console.log(this.store.cards);
+                this.isLoading = false;
+                
+            }).catch(() => {
+                this.checker = false;
             });
+            
 
+            // if(this.store.cards.length == 0) {
+            //     console.log('errore');
+            // }
+            
+            this.checker = true;
             this.store.cardName = '';
         },
     },
@@ -72,19 +89,20 @@ export default {
 </script>
 
 <template>
-    <div v-if="!store.cards.length > 0" class="loading-container">
-        <img src="/img/giphy.webp" alt="">
-    </div>
-
     
-    <div v-else>
+    
+    <div>
         <CardSearch @cardSearch="search()"></CardSearch>
         <div id="card-counter">
-            <span>Trovate {{ store.cards.length }} carte</span>
-
+            <span v-if="this.checker == false"><i>Non è stata trovata alcuna carta, ripeti la ricerca</i></span>
+            <span v-else>Trovate {{ this.store.cards.length }} carte</span>
+            
         </div>
-        <div class="main-container">
-            <CardItem v-for="card in store.cards" :card="card"></CardItem>
+        <div class="main-container" v-if="this.checker == true">
+            <div v-if="this.isLoading == true" class="loading-container">
+                <img src="/img/giphy.webp" alt="">
+            </div>
+            <CardItem v-else v-for="card in this.store.cards" :card="card"></CardItem>
 
         </div>
 
@@ -103,7 +121,7 @@ export default {
     justify-content: center;
 
     img {
-        width: 100%;
+        width: 50%;
         object-fit: contain;
     }
 }
